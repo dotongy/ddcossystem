@@ -1,0 +1,259 @@
+/* style.css - 기본 스타일 정의 */
+
+/* 페이지 표시/숨김 제어 */
+.page {
+  display: none;
+}
+
+.page.active {
+  display: block;
+}
+
+/* 버튼 스타일 */
+.btn-primary {
+  @apply bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 focus:ring-2 focus:ring-indigo-500 focus:outline-none font-medium transition-colors duration-200;
+}
+
+.btn-secondary {
+  @apply bg-gray-200 text-gray-800 px-4 py-2 rounded-lg hover:bg-gray-300 focus:ring-2 focus:ring-gray-500 focus:outline-none font-medium transition-colors duration-200;
+}
+
+/* 입력 필드 스타일 */
+.input {
+  @apply w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 focus:outline-none transition-colors duration-200;
+}
+
+.input-sm {
+  @apply px-2 py-1 text-sm;
+}
+
+/* 라벨 스타일 */
+.label {
+  @apply block text-sm font-medium text-gray-700;
+}
+
+/* 통화 토글 버튼 */
+.currency-toggle-btn {
+  @apply px-3 py-1 rounded-md transition-colors duration-200 cursor-pointer;
+}
+
+.active-currency-toggle {
+  @apply bg-white text-indigo-600 shadow-sm;
+}
+
+/* 네비게이션 링크 */
+.nav-link {
+  @apply transition-colors duration-200;
+}
+
+/* 프린트 숨김 */
+@media print {
+  /* 1. 페이지 기본 설정 */
+  @page {
+    size: A4;
+    margin: 15mm;
+  }
+
+  /* 2. 모든 요소의 배경, 그림자, 테두리를 강제로 초기화 */
+  * {
+    background: transparent !important;
+    color: #000 !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+    border-style: none !important;
+  }
+
+  /* 3. 레이아웃 초기화 */
+  body,
+  #app-container,
+  #main-content,
+  .page.active {
+    position: static !important;
+    display: block !important;
+    width: 100% !important;
+    height: auto !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: visible !important;
+  }
+
+  /* 4. 불필요한 UI 숨기기 */
+  #sidebar,
+  .no-print {
+    display: none !important;
+  }
+
+  /* 5. 인쇄 영역(#print-area)이 페이지 전체를 사용하도록 강제 */
+  #print-area {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 20px !important; /* 패딩 추가 */
+    font-size: 9.5pt;
+    /* position: absolute; 제거 */
+    /* left: 0; top: 0; 제거 */
+  }
+
+  /* 6. 테이블 페이지 나눔 처리 */
+  table {
+    width: 100% !important;
+    border-collapse: collapse !important;
+  }
+  table th,
+  table td {
+    border-style: solid !important; /* 테이블 테두리는 다시 보이도록 설정 */
+  }
+  thead {
+    display: table-header-group !important;
+  }
+  tr,
+  td,
+  th {
+    page-break-inside: avoid !important;
+  }
+
+  /* 7. 기타 설정 */
+  a,
+  a:visited {
+    text-decoration: underline;
+  }
+  a[href]:after {
+    content: none !important;
+  }
+}
+
+/* 반응형 테이블 */
+.overflow-x-auto {
+  scrollbar-width: thin;
+  scrollbar-color: #cbd5e1 #f1f5f9;
+}
+
+.overflow-x-auto::-webkit-scrollbar {
+  height: 6px;
+}
+
+.overflow-x-auto::-webkit-scrollbar-track {
+  background: #f1f5f9;
+  border-radius: 3px;
+}
+
+.overflow-x-auto::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 3px;
+}
+
+.overflow-x-auto::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* 모달 표시 */
+.fixed.hidden {
+  display: none !important;
+}
+
+.fixed:not(.hidden) {
+  display: flex !important;
+}
+
+/* 드롭다운 스타일 */
+.dropdown-item {
+  @apply px-3 py-2 hover:bg-gray-100 cursor-pointer text-sm;
+}
+
+.dropdown-item:hover {
+  @apply bg-gray-100;
+}
+
+/* 체크박스 스타일 */
+input[type="checkbox"] {
+  @apply text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded;
+}
+
+/* 테이블 스타일 개선 */
+table {
+  @apply border-collapse;
+}
+
+table th {
+  @apply bg-slate-50 font-semibold text-slate-700;
+}
+
+table td {
+  @apply border-b border-slate-200;
+}
+
+table tr:hover {
+  @apply bg-slate-50;
+}
+
+/* 에러 메시지 */
+.error-message {
+  @apply text-red-600 bg-red-50 border border-red-200 rounded-lg p-3 text-sm;
+}
+
+/* 성공 메시지 */
+.success-message {
+  @apply text-green-600 bg-green-50 border border-green-200 rounded-lg p-3 text-sm;
+}
+
+/* 로딩 스피너 */
+.spinner {
+  @apply inline-block w-4 h-4 border-2 border-current border-r-transparent rounded-full animate-spin;
+}
+
+/* 카드 스타일 */
+.card {
+  @apply bg-white rounded-xl shadow-md;
+}
+
+.card-header {
+  @apply p-6 border-b border-slate-200;
+}
+
+.card-body {
+  @apply p-6;
+}
+
+/* 폼 그룹 */
+.form-group {
+  @apply space-y-1;
+}
+
+.form-row {
+  @apply grid grid-cols-1 md:grid-cols-2 gap-4;
+}
+
+/* 액션 버튼 그룹 */
+.action-buttons {
+  @apply flex justify-end space-x-2 mt-6;
+}
+
+/* 상태 배지 */
+.status-badge {
+  @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
+}
+
+.status-pending {
+  @apply bg-yellow-100 text-yellow-800;
+}
+
+.status-processing {
+  @apply bg-blue-100 text-blue-800;
+}
+
+.status-completed {
+  @apply bg-green-100 text-green-800;
+}
+
+.status-cancelled {
+  @apply bg-red-100 text-red-800;
+}
+
+body.panel-open {
+    overflow: hidden;
+}
+
+/* 슬라이드-오버 패널의 transform 스타일 */
+#product-detail-panel.is-open {
+    transform: translateX(0);
+}

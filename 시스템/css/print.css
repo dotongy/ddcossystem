@@ -1,0 +1,80 @@
+/* 이 파일은 오직 인쇄 스타일만 담당합니다. */
+
+@page {
+    size: A4;
+    margin: 15mm;
+}
+
+/* 1. is-printing 클래스가 활성화되면, 모든 요소를 기본적으로 숨깁니다. */
+body.is-printing * {
+    visibility: hidden;
+}
+
+/* 2. 인쇄할 대상('print-area' 또는 'qr-code-modal')과 그 자식들만 보이도록 설정하고, 컬러 인쇄를 강제합니다. */
+body.is-printing #print-area,
+body.is-printing #print-area *,
+body.is-printing #qr-code-modal,
+body.is-printing #qr-code-modal * {
+    visibility: visible;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+}
+
+/* 3. 인보이스(#print-area) 인쇄 시 레이아웃 설정 */
+body.is-printing #print-area {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    padding: 0 !important;
+    margin: 0 !important;
+    box-shadow: none !important;
+    border: none !important;
+}
+
+/* 4. QR 코드 모달(#qr-code-modal) 인쇄 시 레이아웃 설정 */
+body.is-printing #qr-code-modal {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: none !important;
+    border: none !important;
+    background: white !important;
+    padding: 20px !important;
+}
+
+/* 5. 인쇄에 불필요한 UI 요소들을 확실하게 숨깁니다. */
+body.is-printing .no-print {
+    display: none !important;
+}
+
+/* 6. 테이블 페이지 나눔 처리 */
+table { page-break-inside: auto; }
+tr    { page-break-inside: avoid; page-break-after: auto; }
+thead { display: table-header-group; }
+
+/* =============================================================== */
+/* === 최종 색상 보정을 위한 인쇄 전용 클래스 정의 === */
+/* =============================================================== */
+
+/* 문서 제목 색상 강제 적용 */
+.print-text-quotation {
+    color: #3B82F6 !important;
+}
+.print-text-invoice {
+    color: #DC2626 !important;
+}
+.print-text-packinglist {
+    color: #16A34A !important;
+}
+
+/* 문서 배경색 강제 적용 */
+.print-bg {
+    background-color: #F9FAFB !important;
+}
+
+/* 테이블 헤더 배경색 강제 적용 (만약 필요하다면) */
+thead.bg-gray-50, thead.bg-slate-50 {
+    background-color: #F9FAFB !important;
+}

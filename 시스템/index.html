@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Integrated Business System</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              'primary': '#3B82F6',
+              'primary-dark': '#2563EB',
+              'secondary': '#6B7280',
+              'light': '#F9FAFB',
+              'border': '#E5E7EB',
+              'success': '#10B981',
+              'danger': '#EF4444',
+            }
+          }
+        }
+      }
+    </script>
+    
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+
+    <link rel="stylesheet" href="style.css" /> 
+    <link href="/css/print.css" rel="stylesheet" media="print">
+  </head>
+  
+  <body class="bg-light font-sans text-gray-800">
+    <div id="login-container"></div>
+
+    <div id="app-container" class="flex h-screen hidden">
+      <aside
+        id="sidebar"
+        class="w-64 bg-white text-gray-800 flex flex-col flex-shrink-0 no-print border-r border-border"
+      >
+        <div
+          class="h-16 flex items-center justify-center border-b border-border"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-8 w-8 text-primary"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z"
+              clip-rule="evenodd"
+            />
+          </svg>
+          <h1 class="text-xl font-bold ml-2 text-primary">My System</h1>
+        </div>
+        <nav id="sidebar-nav" class="flex-1 px-4 py-6 space-y-2">
+          <a href="#dashboard" class="nav-link flex items-center px-4 py-2 text-secondary hover:bg-gray-100 hover:text-primary rounded-lg transition-colors">
+            <i class="fa-solid fa-house w-5 text-center"></i><span class="ml-3">Dashboard</span>
+          </a>
+          <a href="#customers" class="nav-link flex items-center px-4 py-2 text-secondary hover:bg-gray-100 hover:text-primary rounded-lg transition-colors">
+            <i class="fa-solid fa-users w-5 text-center"></i><span class="ml-3">Customers</span>
+          </a>
+          <a href="#consultations" class="nav-link flex items-center px-4 py-2 text-secondary hover:bg-gray-100 hover:text-primary rounded-lg transition-colors">
+            <i class="fa-solid fa-clipboard-list w-5 text-center"></i><span class="ml-3">상담 일지</span>
+          </a>
+          <a href="#products" class="nav-link flex items-center px-4 py-2 text-secondary hover:bg-gray-100 hover:text-primary rounded-lg transition-colors">
+            <i class="fa-solid fa-box-archive w-5 text-center"></i><span class="ml-3">Products</span>
+          </a>
+          <a href="#orders" class="nav-link flex items-center px-4 py-2 text-secondary hover:bg-gray-100 hover:text-primary rounded-lg transition-colors">
+            <i class="fa-solid fa-cart-shopping w-5 text-center"></i><span class="ml-3">Orders</span>
+          </a>
+          <a href="#analytics" class="nav-link flex items-center px-4 py-2 text-secondary hover:bg-gray-100 hover:text-primary rounded-lg transition-colors">
+            <i class="fa-solid fa-chart-pie w-5 text-center"></i><span class="ml-3">Analytics</span>
+          </a>
+          <a href="#workflow" class="nav-link flex items-center px-4 py-2 text-secondary hover:bg-gray-100 hover:text-primary rounded-lg transition-colors">
+            <i class="fa-solid fa-diagram-project w-5 text-center"></i><span class="ml-3">Workflow</span>
+          </a>          
+          <a href="#invoice" class="nav-link flex items-center px-4 py-2 text-secondary hover:bg-gray-100 hover:text-primary rounded-lg transition-colors">
+            <i class="fa-solid fa-file-invoice-dollar w-5 text-center"></i><span class="ml-3">Invoice</span>
+          </a>
+          <a href="#packinglist" class="nav-link flex items-center px-4 py-2 text-secondary hover:bg-gray-100 hover:text-primary rounded-lg transition-colors">
+            <i class="fa-solid fa-boxes-packing w-5 text-center"></i><span class="ml-3">Packing List</span>
+          </a>
+          <a href="#settings" class="nav-link flex items-center px-4 py-2 text-secondary hover:bg-gray-100 hover:text-primary rounded-lg transition-colors">
+            <i class="fa-solid fa-gear w-5 text-center"></i><span class="ml-3">Settings</span>
+          </a>
+        </nav>
+        <div id="user-profile" class="p-4 border-t border-border">
+          <p id="user-email" class="text-sm text-secondary truncate" title="Logged in user"></p>
+          <button id="logout-btn" class="w-full mt-2 text-left text-sm text-danger hover:text-red-700 font-semibold transition-colors">
+            Logout
+          </button>
+        </div>
+      </aside>
+
+      <main id="main-content" class="flex-1 overflow-y-auto flex flex-col">
+        <div id="dashboard-page" class="page p-6 lg:p-8"></div>
+        <div id="customers-page" class="page p-6 lg:p-8"></div>
+        <div id="consultations-page" class="page p-6 lg:p-8"></div> 
+        <div id="products-page" class="page p-6 lg:p-8"></div>       
+        <div id="orders-page" class="page p-6 lg:p-8"></div>
+        <div id="analytics-page" class="page p-6 lg:p-8"></div>
+        <div id="workflow-page" class="page p-6 lg:p-8"></div>        
+        <div id="invoice-page" class="page p-6 lg:p-8"></div>
+        <div id="packinglist-page" class="page p-6 lg:p-8"></div>
+        <div id="settings-page" class="page p-6 lg:p-8"></div>
+        
+        <div id="customer-form-page" class="page p-6 lg:p-8"></div>
+        <div id="product-form-page" class="page p-6 lg:p-8"></div>        
+        
+        <div id="order-form-page" class="page p-6 lg:p-8"></div>
+        <div id="consultation-form-page" class="page p-6 lg:p-8"></div>
+      </main>
+    </div>
+
+    <div id="public-form-container" class="hidden">
+      <div id="buyer-form-page" class="page"></div></div>
+    <input type="file" id="customer-excel-input" class="hidden" ... />
+    <input type="file" id="product-excel-input" class="hidden" ... />
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script type="module" src="js/main.js"></script>
+
+    <div id="qr-code-modal" class="hidden fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50 p-4">
+      <div class="bg-white rounded-2xl shadow-2xl w-full max-w-sm transform transition-all">
+          <div class="p-6 text-center">
+              <h2 class="text-xl font-bold text-gray-800" id="qr-modal-title">QR Code</h2>
+              <p class="text-sm text-gray-500 mt-1">Scan this code to register your information.</p>
+          </div>
+          
+          <div class="p-6 flex justify-center">
+              <div id="qrcode" class="p-4 bg-white border rounded-lg shadow-inner">
+                  </div>
+          </div>
+  
+          <div class="p-6 bg-gray-50 rounded-b-2xl no-print">
+              <div class="grid grid-cols-2 gap-3 mb-3">
+                <button id="print-qr-btn" type="button" class="w-full px-4 py-3 bg-gray-200 text-gray-800 font-semibold rounded-lg hover:bg-gray-300">
+                    Print
+                </button>
+                <button id="download-qr-btn" type="button" class="w-full px-4 py-3 bg-gray-200 text-gray-800 font-semibold rounded-lg hover:bg-gray-300">
+                    Save as Image
+                </button>
+              </div>
+              <button id="close-qr-modal-btn" type="button" class="w-full px-4 py-3 bg-primary text-white font-semibold rounded-lg hover:bg-primary-dark">
+                  Close
+              </button>
+          </div>
+      </div>
+    </div>
+    </body>
+</html>
